@@ -1,0 +1,65 @@
+.modal-fondo {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  z-index: 50;
+}
+
+.modal {
+  background: #fff;
+  border-radius: 14px;
+  padding: 24px;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.25);
+}
+
+.modal h3 {
+  margin: 0 0 12px;
+}
+
+.modal-producto {
+  background: #f8fafc;
+  border: 1px solid var(--borde);
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 0.92rem;
+  margin: 0 0 16px;
+}
+
+.modal-cantidad {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 0.85rem;
+  color: var(--texto-suave);
+  font-weight: 600;
+}
+
+.modal-cantidad input {
+  border: 1px solid var(--borde);
+  border-radius: 8px;
+  padding: 9px 11px;
+  font: inherit;
+}
+
+.modal-total {
+  font-weight: 700;
+  font-size: 1.1rem;
+  margin: 14px 0;
+}
+
+.modal-error {
+  color: var(--alerta);
+  font-size: 0.88rem;
+  margin: 0 0 12px;
+}
+
+.modal-acciones {
+  display: flex;
+  gap: 10px;
+}

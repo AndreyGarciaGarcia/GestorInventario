@@ -1,0 +1,9 @@
+<div class="tarjeta" [class.tarjeta-alerta]="alerta()">
+  @if (icono()) {
+    <span class="tarjeta-icono" aria-hidden="true">{{ icono() }}</span>
+  }
+  <div>
+    <p class="tarjeta-valor">{{ valor() }}</p>
+    <p class="tarjeta-titulo">{{ titulo() }}</p>
+  </div>
+</div>

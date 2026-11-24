@@ -1,0 +1,87 @@
+@if (cargando()) {
+  <p class="estado">Cargando inventario…</p>
+} @else if (productos().length === 0) {
+  <p class="estado">No hay productos que mostrar.</p>
+} @else {
+  <div class="tabla-contenedor">
+    <table class="tabla">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nombre</th>
+          <th class="derecha">Precio</th>
+          <th class="derecha">Stock</th>
+          <th class="derecha">Valor</th>
+          <th>Categoría</th>
+          <th class="acciones">Acciones</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        @for (p of productos(); track p.id) {
+          <tr [class.fila-bajo]="p.stock <= umbral()">
+            <td class="id">{{ p.id }}</td>
+
+            <td>
+              <strong>{{ p.nombre }}</strong>
+              @if (p.stock > 0 && p.stock <= umbral()) {
+                <span class="chip chip-alerta">stock bajo</span>
+              }
+              @if (p.stock === 0) {
+                <span class="chip chip-agotado">agotado</span>
+              }
+            </td>
+
+            <td class="derecha">{{ p.precio | currency: 'EUR':'symbol':'1.2-2':'es' }}</td>
+
+            <td class="derecha">
+              <button
+                type="button"
+                class="stock"
+                title="Recontar stock"
+                (click)="recontar.emit(p)"
+              >
+                {{ p.stock }}
+              </button>
+            </td>
+
+            <td class="derecha">{{ p.valorTotal | currency: 'EUR':'symbol':'1.2-2':'es' }}</td>
+
+            <td>
+              @if (p.categoria) {
+                <span class="chip">{{ p.categoria }}</span>
+              } @else {
+                <span class="sin-categoria">—</span>
+              }
+            </td>
+
+            <td class="acciones">
+              <button
+                type="button"
+                class="boton-mini"
+                title="Registrar venta"
+                [disabled]="p.stock === 0"
+                (click)="vender.emit(p)"
+              >
+              </button>
+              <button
+                type="button"
+                class="boton-mini"
+                title="Editar"
+                (click)="editar.emit(p)"
+              >
+              </button>
+              <button
+                type="button"
+                class="boton-mini boton-mini-peligro"
+                title="Eliminar"
+                (click)="eliminar.emit(p)"
+              >
+              </button>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+}

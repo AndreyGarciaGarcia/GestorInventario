@@ -1,0 +1,74 @@
+<section class="formulario">
+  <h2>{{ editando() ? 'Editar producto' : 'Nuevo producto' }}</h2>
+
+  <form class="formulario-campos" (ngSubmit)="enviar()">
+    <label>
+      Nombre *
+      <input
+        type="text"
+        name="nombre"
+        [ngModel]="valores().nombre"
+        (ngModelChange)="actualizar('nombre', $event)"
+        placeholder="Portatil Lenovo"
+        maxlength="120"
+        required
+      />
+    </label>
+
+    <label>
+      Precio (€) *
+      <input
+        type="number"
+        name="precio"
+        [ngModel]="valores().precio"
+        (ngModelChange)="actualizar('precio', $event)"
+        placeholder="899.99"
+        min="0.01"
+        step="0.01"
+        required
+      />
+    </label>
+
+    <label>
+      Stock *
+      <input
+        type="number"
+        name="stock"
+        [ngModel]="valores().stock"
+        (ngModelChange)="actualizar('stock', $event)"
+        placeholder="10"
+        min="0"
+        step="1"
+        required
+      />
+    </label>
+
+    <label>
+      Categoría
+      <input
+        type="text"
+        name="categoria"
+        [ngModel]="valores().categoria"
+        (ngModelChange)="actualizar('categoria', $event)"
+        placeholder="Informática"
+        maxlength="60"
+      />
+    </label>
+
+    <div class="formulario-acciones">
+      <button type="submit" class="boton">
+        {{ editando() ? 'Guardar cambios' : 'Añadir producto' }}
+      </button>
+
+      @if (editando()) {
+        <button
+          type="button"
+          class="boton boton-secundario"
+          (click)="cancelarEdicion.emit()"
+        >
+          Cancelar
+        </button>
+      }
+    </div>
+  </form>
+</section>

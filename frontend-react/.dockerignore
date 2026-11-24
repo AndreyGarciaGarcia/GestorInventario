@@ -1,0 +1,5 @@
+# .dockerignore frontend — no empaquetar node_modules ni dist
+node_modules
+dist
+npm-debug.log
+.env

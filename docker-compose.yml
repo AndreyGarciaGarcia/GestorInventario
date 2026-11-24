@@ -1,0 +1,84 @@
+version: '3.8'
+
+services:
+  # ------------------------------------------------------------------
+  # Base de datos real (MySQL 8)
+  # ------------------------------------------------------------------
+  mysql:
+    image: mysql:8.0
+    container_name: gestor-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: root123
+      MYSQL_DATABASE: gestor_inventario
+      MYSQL_USER: gestor
+      MYSQL_PASSWORD: gestor123
+    ports:
+      - "3306:3306"
+    volumes:
+      - gestor_mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  # ------------------------------------------------------------------
+  # Backend Spring Boot (perfil mysql → usa el servicio mysql de arriba)
+  # ------------------------------------------------------------------
+  backend:
+    build:
+      context: ../backend
+      dockerfile: Dockerfile
+    container_name: gestor-backend
+    restart: unless-stopped
+    depends_on:
+      mysql:
+        condition: service_healthy
+    environment:
+      SPRING_PROFILES_ACTIVE: mysql
+      MYSQL_HOST: mysql
+      MYSQL_PORT: 3306
+      MYSQL_DATABASE: gestor_inventario
+      MYSQL_USER: gestor
+      MYSQL_PASSWORD: gestor123
+    ports:
+      - "8080:8080"
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:8080/api/inventario/valor-total"]
+      interval: 10s
+      timeout: 5s
+      retries: 20
+
+  # ------------------------------------------------------------------
+  # Frontend React (puerto 5173)
+  # ------------------------------------------------------------------
+  frontend-react:
+    build:
+      context: ../frontend-react
+      dockerfile: Dockerfile
+    container_name: gestor-frontend-react
+    restart: unless-stopped
+    depends_on:
+      backend:
+        condition: service_healthy
+    ports:
+      - "5173:80"
+
+  # ------------------------------------------------------------------
+  # Frontend Angular (puerto 4200)
+  # ------------------------------------------------------------------
+  frontend-angular:
+    build:
+      context: ../frontend-angular
+      dockerfile: Dockerfile
+    container_name: gestor-frontend-angular
+    restart: unless-stopped
+    depends_on:
+      backend:
+        condition: service_healthy
+    ports:
+      - "4200:80"
+
+volumes:
+  gestor_mysql_data:

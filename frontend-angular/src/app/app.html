@@ -1,0 +1,115 @@
+<div class="app">
+  <header class="cabecera">
+    <div>
+      <h1>Gestor de Inventario</h1>
+      <p class="subtitulo">API REST · Spring Boot + Angular</p>
+    </div>
+
+    <button type="button" class="boton boton-secundario" (click)="refrescar()">
+      ⟳ Actualizar
+    </button>
+  </header>
+
+  <div class="toasts-contenedor">
+    @for (t of toasts(); track t.id) {
+    <app-toast
+      [id]="t.id"
+      [tipo]="t.tipo"
+      [mensaje]="t.mensaje"
+      (cerrar)="cerrarToast($event)"></app-toast>
+    }
+  </div>
+
+  <section class="resumen">
+    <app-tarjeta-resumen
+      [valor]="resumen()?.totalProductos ?? '—'"
+      titulo="Productos"></app-tarjeta-resumen>
+    <app-tarjeta-resumen
+      [valor]="resumen()?.totalUnidades ?? '—'"
+      titulo="Unidades"></app-tarjeta-resumen>
+    <app-tarjeta-resumen
+      [valor]="valorFormateado()"
+      titulo="Valor del inventario"></app-tarjeta-resumen>
+    <app-tarjeta-resumen
+      [titulo]="'Stock bajo (≤ ' + umbral + ')'"
+      [valor]="resumen()?.stockBajo ?? '—'"
+      [alerta]="(resumen()?.stockBajo ?? 0) > 0"
+    />
+  </section>
+
+  <app-formulario-producto
+    [editando]="productoEnEdicion()"
+    (guardar)="guardar($event)"
+    (cancelarEdicion)="productoEnEdicion.set(null)"
+  />
+
+  <section class="listado">
+    <div class="listado-cabecera">
+      <h2>Inventario ({{ productosVisibles().length }})</h2>
+
+      <div class="filtros">
+        <input
+          type="search"
+          placeholder="Buscar por nombre…"
+          [ngModel]="textoBusqueda()"
+          (ngModelChange)="textoBusqueda.set($event)"
+        />
+
+        <label class="casilla">
+          <input
+            type="checkbox"
+            [ngModel]="soloStockBajo()"
+            (ngModelChange)="soloStockBajo.set($event)"
+          />
+          Solo stock bajo
+        </label>
+      </div>
+    </div>
+
+    <app-tabla-productos
+      [productos]="productosVisibles()"
+      [cargando]="cargando()"
+      [umbral]="umbral"
+      (editar)="editar($event)"
+      (vender)="productoEnVenta.set($event)"
+      (eliminar)="eliminar($event)"
+      (recontar)="recontar($event)"
+    />
+
+    <div class="paginador">
+      <span class="paginador-info">
+        Página {{ pagina() + 1 }} de {{ totalPaginas() }} ({{ totalElementos() }} elementos)
+      </span>
+      <div class="paginador-botones">
+        <button
+          type="button"
+          class="boton-mini"
+          [disabled]="pagina() === 0"
+          (click)="paginaAnterior()"
+        >
+          Anterior
+        </button>
+        <button
+          type="button"
+          class="boton-mini"
+          [disabled]="pagina() >= totalPaginas() - 1 || totalPaginas() === 0"
+          (click)="paginaSiguiente()"
+        >
+          Siguiente
+        </button>
+      </div>
+    </div>
+  </section>
+
+  @if (productoEnVenta(); as producto) {
+  <app-modal-venta
+    [producto]="producto"
+    (confirmar)="confirmarVenta($event)"
+    (cancelar)="productoEnVenta.set(null)"
+  />
+  }
+
+  <footer class="pie">
+    GestorInventario · Fase 4 — Angular + la misma API REST de la Fase 2
+  </footer>
+</div>

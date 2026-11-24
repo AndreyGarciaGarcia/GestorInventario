@@ -1,0 +1,49 @@
+.formulario {
+  background: var(--tarjeta);
+  border: 1px solid var(--borde);
+  border-radius: var(--radio);
+  padding: 20px;
+  box-shadow: var(--sombra);
+  margin-bottom: 20px;
+}
+
+.formulario h2 {
+  margin: 0 0 16px;
+  font-size: 1.1rem;
+}
+
+.formulario-campos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 14px;
+  align-items: end;
+}
+
+.formulario-campos label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 0.85rem;
+  color: var(--texto-suave);
+  font-weight: 600;
+}
+
+.formulario-campos input {
+  border: 1px solid var(--borde);
+  border-radius: 8px;
+  padding: 9px 11px;
+  background: #fff;
+  color: var(--texto);
+  font: inherit;
+}
+
+.formulario-campos input:focus {
+  outline: 2px solid var(--acento);
+  outline-offset: 1px;
+  border-color: var(--acento);
+}
+
+.formulario-acciones {
+  display: flex;
+  gap: 10px;
+}

@@ -1,0 +1,4 @@
+<div class="toast" [class.toast-exito]="esExito" [class.toast-error]="!esExito" [class.visible]="visible()">
+  <span class="toast-mensaje">{{ mensaje() }}</span>
+  <button type="button" class="toast-cerrar" (click)="cerrar.emit(id())" aria-label="Cerrar notificación">✕</button>
+</div>

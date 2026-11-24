@@ -1,0 +1,25 @@
+# Perfil "mysql": base de datos real (usado por Docker Compose).
+spring:
+  config:
+    activate:
+      on-profile: mysql
+
+  datasource:
+    url: jdbc:mysql://${MYSQL_HOST:localhost}:${MYSQL_PORT:3306}/${MYSQL_DATABASE:gestor_inventario}?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=UTC&characterEncoding=UTF-8&allowPublicKeyRetrieval=true
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: ${MYSQL_USER:gestor}
+    password: ${MYSQL_PASSWORD:gestor123}
+
+  jpa:
+    hibernate:
+      # update: crea las tablas si no existen sin borrar datos
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+
+  sql:
+    init:
+      # En MySQL la semilla la gestiona Hibernate + data.sql condicionado
+      mode: always
+      continue-on-error: true

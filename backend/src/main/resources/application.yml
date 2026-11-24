@@ -1,0 +1,35 @@
+spring:
+  application:
+    name: gestor-inventario-backend
+
+  # Perfil por defecto en local: H2 en memoria (compatibilidad MySQL).
+  # En Docker se activa el perfil "mysql" con SPRING_PROFILES_ACTIVE=mysql.
+  profiles:
+    default: local
+
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: update
+    # Ejecuta data.sql DESPUÉS de que Hibernate cree las tablas
+    defer-datasource-initialization: true
+    properties:
+      hibernate:
+        format_sql: false
+
+  # Semilla de datos de ejemplo (solo si la tabla está vacía)
+  sql:
+    init:
+      mode: embedded
+      data-locations: classpath:data.sql
+
+server:
+  port: 8080
+
+# Umbral por defecto de "stock bajo" usado por GET /api/inventario/resumen
+app:
+  stock-bajo-por-defecto: 5
+
+logging:
+  level:
+    com.gestorinventario: INFO

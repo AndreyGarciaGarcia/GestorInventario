@@ -1,0 +1,49 @@
+<div class="modal-fondo" (click)="cancelar.emit()">
+  <div class="modal" (click)="$event.stopPropagation()">
+    <h3>Registrar venta</h3>
+
+    <p class="modal-producto">
+      <strong>{{ producto().nombre }}</strong>
+      <br />
+      Stock disponible: {{ producto().stock }} ·
+      {{ producto().precio | currency: 'EUR':'symbol':'1.2-2':'es' }}
+    </p>
+
+    <label class="modal-cantidad">
+      Unidades a vender
+      <input
+        type="number"
+        min="1"
+        [max]="producto().stock"
+        [ngModel]="cantidad()"
+        (ngModelChange)="cantidad.set($event === '' ? 0 : +$event)"
+      />
+    </label>
+
+    <p class="modal-total">
+      Total: {{ total | currency: 'EUR':'symbol':'1.2-2':'es' }}
+    </p>
+
+    @if (excede) {
+      <p class="modal-error">No hay suficientes existencias.</p>
+    }
+    @if (error()) {
+      <p class="modal-error">{{ error() }}</p>
+    }
+
+    <div class="modal-acciones">
+      <button
+        type="button"
+        class="boton"
+        [disabled]="enviando() || excede || cantidad() < 1"
+        (click)="enviar()"
+      >
+        {{ enviando() ? 'Registrando…' : 'Confirmar venta' }}
+      </button>
+
+      <button type="button" class="boton boton-secundario" (click)="cancelar.emit()">
+        Cancelar
+      </button>
+    </div>
+  </div>
+</div>

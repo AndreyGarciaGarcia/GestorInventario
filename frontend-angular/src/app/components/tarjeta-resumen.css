@@ -1,0 +1,32 @@
+.tarjeta {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: var(--tarjeta);
+  border: 1px solid var(--borde);
+  border-radius: var(--radio);
+  padding: 16px 18px;
+  box-shadow: var(--sombra);
+}
+
+.tarjeta-alerta {
+  border-color: #fecaca;
+  background: var(--alerta-suave);
+}
+
+.tarjeta-icono {
+  font-size: 1.7rem;
+}
+
+.tarjeta-valor {
+  margin: 0;
+  font-size: 1.35rem;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.tarjeta-titulo {
+  margin: 3px 0 0;
+  color: var(--texto-suave);
+  font-size: 0.83rem;
+}

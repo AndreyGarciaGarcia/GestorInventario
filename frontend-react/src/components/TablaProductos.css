@@ -1,0 +1,104 @@
+/* Tabla del inventario */
+
+.tabla-contenedor {
+  overflow-x: auto;
+  border: 1px solid var(--borde);
+  border-radius: var(--radio);
+}
+
+.tabla {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.93rem;
+  min-width: 720px;
+}
+
+.tabla thead th {
+  background: #f8fafc;
+  text-align: left;
+  padding: 11px 14px;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--texto-suave);
+  border-bottom: 1px solid var(--borde);
+}
+
+.tabla tbody td {
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--borde);
+  vertical-align: middle;
+}
+
+.tabla tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.tabla tbody tr:hover {
+  background: #f9fbff;
+}
+
+.fila-bajo {
+  background: #fffafa;
+}
+
+.derecha {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.id {
+  color: var(--texto-suave);
+  width: 46px;
+}
+
+.acciones {
+  text-align: right;
+  white-space: nowrap;
+  width: 130px;
+}
+
+.acciones .boton-mini + .boton-mini {
+  margin-left: 6px;
+}
+
+.stock {
+  background: none;
+  border: 1px dashed transparent;
+  border-radius: 6px;
+  padding: 3px 8px;
+  font-weight: 600;
+  color: inherit;
+}
+
+.stock:hover {
+  border-color: var(--acento);
+  color: var(--acento);
+}
+
+.chip {
+  display: inline-block;
+  background: #eef2ff;
+  color: #3730a3;
+  border-radius: 999px;
+  padding: 2px 9px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  margin-left: 8px;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+.chip-alerta {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.chip-agotado {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.sin-categoria {
+  color: var(--texto-suave);
+}
